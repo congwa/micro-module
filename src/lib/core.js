@@ -67,7 +67,24 @@ class Core {
         );
         fragment.appendChild(contentWrapper);
         return fragment
+    };
+
+    renderHtmlTagObjectToHtmlElement(tagDefinition) {
+      const tagElement = document.createElement(tagDefinition.tagName);
+      Object.keys(tagDefinition.attributes || {}).forEach((attributeName) => {
+        tagElement.setAttribute(attributeName, tagDefinition.attributes?.[attributeName] || '');
+      });
+      return tagElement;
+    }
+
+    
+    createHtmlTagObject(tagName, attributes) {
+      return {
+        tagName,
+        voidTag: voidTags.indexOf(tagName) !== -1,
+        attributes: attributes,
       };
+    }
 }
 
 export default Core;
