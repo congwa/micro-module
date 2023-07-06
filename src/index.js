@@ -1,4 +1,4 @@
-import Core from './lib/index.js';
+import Core from './lib/core.js';
 
 export const define = (name, module, options = {}) => {
     if (!name) {

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>demo</title>
+</head>
+<body>
+  <div>测试</div>
+  <div id="root">
+    <component-module id="a"></component-module>
+  </div>
+</body>
+<script type="module">
+  import {define} from '../src/index.js';
+  var domDiv = null
+  var moduleA = {
+    bootstrap() {
+      console.log('bootstrap');
+    },
+    mount(container, props = {moduleA: 'moduleA'}) {
+      console.log('module mount >>> ', props);
+      //   vueInstance = Vue.createApp({
+      //   ...App,
+      //   data() {
+      //     return props;
+      //   },
+      // }).mount(container);
+      domDiv = document.createElement("div");
+      domDiv.innerHTML = "module-A: " + JSON.stringify(props)
+      container.appendChild(domDiv)
+    },
+    updated(attrName, value) {
+      console.log("update: ", attrName, "---", value)
+      domDiv.innerHTML = "update: " + value;
+    },
+    unmount() {
+      console.log("unmount")
+    }
+  }
+
+  window.onload = function() {
+    define('component-module', moduleA, {})  
+  }
+
+</script>
+</html>
